@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <math.h>
+#include <iostream>
+using namespace std;
+
 class vec {
 private:
 	int x, y, z;
@@ -8,9 +11,7 @@ public:
 	//constructor
 	vec() : x(0), y(0), z(0) {}
 
-	vec(int xx) : x(xx), y(0), z(0) {}
-	vec(int yy) : x(0), y(yy), z(0) {}
-	vec(int zz) : x(00), y(0), z(zz) {}
+	//falta uno
 
 	vec(int xx, int yy, int zz) : x(xx), y(yy), z(zz) {}
 
@@ -36,18 +37,17 @@ public:
 		return resvec;
 	}
 
-	vec& operator+= (vec &vector) {
+	void operator+= (vec &vector) {
 		x += vector.x;
 		y += vector.y;
 		z += vector.z;
-		return *this;
 	}
 
-	vec& operator-= (vec &vector) {
+	void operator-= (vec &vector) {
 		x -= vector.x;
 		y -= vector.y;
 		z -= vector.z;
-		return *this;
+		
 	}
 
 	bool operator== (vec &vector) {
@@ -60,16 +60,18 @@ public:
 
 	}
 
-	vec operator= (vec &vector) {
-		vec newvec;
-		newvec.x = vector.x;
-		newvec.y = vector.y;
-		newvec.z = vector.z;
-		return newvec;
+	
 
-
+	void operator= ( const vec &vector) {
+		x = vector.x;
+		y = vector.y;
+		z = vector.z; 
 	}
-	//methods
+
+	
+
+	//
+
 	vec normalize() {
 		vec normievec;
 		int length;
@@ -92,10 +94,52 @@ public:
 	void zero( vec &vector) { vector.x = vector.y = vector.z = 0; }
 
 	//distance to
+
+	void print() {
+	
+		cout << "x: " << x << " y: " << y << " z: " << z << endl;
+	}
 };
 
 int main() {
 
+	cout << "vectors" << endl;
 
+	vec vector1 (1, 1, 1);
+	vec vector2 (2, 0, 2);
+	vec vector3;
+	vec vector4;
+	vec vector5;
+
+	cout << "vecto 1:" << endl;
+	vector1.print();
+	cout << "vecto 2:" << endl;
+	vector2.print();
+	cout << "vecto 3:" << endl;
+	vector3.print();
+	cout << endl; //0,0,0
+	
+	vector3 = (vector1 + vector2);
+	vector3.print();
+	cout << endl; //3,1,3
+
+	vector3 = (vector1 - vector2);
+	vector3.print();
+	cout << endl; //-1.1.-1
+
+	cout << "vecto 4:" << endl;
+	vector4 += vector1;
+	vector4.print();
+	cout << endl; //1.1.1
+
+	vector4 -= vector1;
+	vector4.print();
+	cout << endl << endl; //0,0,0
+
+	cout << (vector4 == vector3) << endl;
+	cout << (vector4 == vector5) << endl;
+
+
+system("pause");
 	return 0;
 }
