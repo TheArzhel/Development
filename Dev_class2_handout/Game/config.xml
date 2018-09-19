@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- here comes the game properties -->
+<config>
+<app>
+   <name> Timelapse </name>
+  <organization>UPC</organization>
+</app>
+
+<audio>
+</audio>
+
+<input>
+</input>
+
+  <renderer>
+    <fullscreen value="false"/>
+    <borderless value="false"/>
+    <resizable value="true"/>
+    <fullscreen_window value="false"/>
+  </renderer>
+
+  <textures> 
+  </textures>
+
+  <window>
+    <width value="1024"/>
+    <height value="768"/>
+    <scale value="1"/>
+  </window>
+
+</config>
