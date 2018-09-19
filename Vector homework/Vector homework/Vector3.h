@@ -55,7 +55,7 @@ public:
 		return (x == vector.x && y == vector.y && z == vector.z); 
 	}
 
-	vec operator= (  vec &vector) 
+	vec operator= ( const vec &vector) 
 	{
 		x = vector.x;
 		y = vector.y;
@@ -77,17 +77,17 @@ public:
 		return (vector.x == 0 && vector.y == 0 && vector.z == 0);
 	}
 
-	void zero(vec &vector) 
+	vec zero(vec &vector) 
 	{ 
 		vector.x = vector.y = vector.z = 0; 
+		return *this;
 	}
 
 	void distance_to( const vec &vector) const
 	{
-		T a, b, c;
-		a = x - vector.x;
-		b = y - vector.y;
-		c = z - vector.z;
+		T a = x - vector.x;
+		T b = y - vector.y;
+		T c = z - vector.z;
 		cout << "the distances from each component of each vector are " << "x: " << a << " y: " << b << " z:  " << c << endl;
 	}
 

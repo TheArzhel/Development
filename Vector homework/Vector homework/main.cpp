@@ -15,9 +15,9 @@ int main() {
 
 	vec<int> vector1 (1, 1, 1);
 	vec<int> vector2 (2, 0, 2);
-	vec<int> vector3;
-	vec<int> vector4;
-	vec<int> vector5;
+	vec<int> vector3=vector3.zero;
+	vec<int> vector4=vector4.zero;
+	vec<int> vector5=vector5.zero;
 
 	cout << "vecto 1:" << endl;
 	vector1.print();
