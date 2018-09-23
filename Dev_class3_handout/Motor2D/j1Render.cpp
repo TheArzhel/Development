@@ -94,7 +94,7 @@ bool j1Render::loading( pugi::xml_node& hola) const
 	camera.x = hola.child("camera").first_attribute().as_int();
 	camera.y = hola.child("camera").last_attribute().as_int();
 	
-
+	return true;
 }
 
 // TODO 8: Create a method to save the state of the renderer

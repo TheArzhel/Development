@@ -158,7 +158,8 @@ void j1App::FinishUpdate()
 	}
 	if (load) 
 	{
-
+		LoadSaveFile();
+		load = false;
 	}
 }
 
