@@ -41,6 +41,9 @@ public:
 
 	//virtual overtide loading
 	bool loading( pugi::xml_node& hola) const override;
+	
+	//virtual overrider saving
+	bool saving(pugi::xml_node& hola) const override;
 
 public:
 

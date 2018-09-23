@@ -154,7 +154,8 @@ void j1App::FinishUpdate()
 
 	if (save)
 	{
-
+		SavingFile();
+		save = false;
 	}
 	if (load) 
 	{
@@ -289,7 +290,7 @@ bool j1App::LoadSaveFile()
 {
 	bool ret = true;
 
-	pugi::xml_parse_result result = save_file.load_file("savegame.xml");
+	pugi::xml_parse_result result = save_file_doc.load_file("savegame.xml");
 
 	if (result == NULL)
 	{
@@ -299,7 +300,7 @@ bool j1App::LoadSaveFile()
 	else
 	{
 
-		saveGame = save_file.child("save");
+		saveGame = save_file_doc.child("save");
 		app_save = saveGame.child("renderer");
 		App->render->loading(app_save);
 	}
@@ -309,3 +310,24 @@ bool j1App::LoadSaveFile()
 
 // TODO 7: Create a method to save the current state
 
+bool j1App::SavingFile()
+{
+	bool ret = true;
+
+	pugi::xml_parse_result result = save_file_doc.load_file("savegame.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file savegame.xml. pugi error: %s", result.description());
+		ret = false;
+	}
+	else
+	{
+
+		saveGame = save_file_doc.child("save");
+		app_save = saveGame.child("renderer");
+		App->render->saving(app_save);
+	}
+
+	return ret;
+}

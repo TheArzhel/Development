@@ -100,6 +100,23 @@ bool j1Render::loading( pugi::xml_node& hola) const
 // TODO 8: Create a method to save the state of the renderer
 // using append_child and append_attribute
 
+bool j1Render::saving(pugi::xml_node& hola) const
+{
+	hola.child("camera").first_attribute().set_value(camera.x);
+
+	hola.child("camera").last_attribute().set_value(camera.y);
+
+	/*pugi::xml_attribute attrX = hola.child("camera").first_attribute();
+
+	attrX.set_value(camera.x);
+	
+	pugi::xml_attribute attrY = hola.child("camera").last_attribute();;
+
+	attrY.set_value(camera.y);*/
+
+	return true;
+}
+
 void j1Render::SetBackgroundColor(SDL_Color color)
 {
 	background = color;

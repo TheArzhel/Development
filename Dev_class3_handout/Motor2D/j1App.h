@@ -64,6 +64,9 @@ private:
 	//Load save file
 	bool LoadSaveFile();
 
+	//bool save 
+	bool SavingFile();
+
 	// Call modules before each loop iteration
 	void PrepareUpdate();
 
@@ -95,7 +98,7 @@ private:
 	uint				frames;
 	float				dt;
 	pugi::xml_document	config_file;
-	pugi::xml_document	save_file;
+	pugi::xml_document	save_file_doc;
 	pugi::xml_node		config;
 	pugi::xml_node		saveGame;
 	pugi::xml_node		app_config;
