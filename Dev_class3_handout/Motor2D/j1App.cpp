@@ -284,6 +284,27 @@ bool j1App::mustload() {
 
 // TODO 5: Create a method to actually load an xml file
 // then call all the modules to load themselves
+bool j1App::LoadSaveFile()
+{
+	bool ret = true;
+
+	pugi::xml_parse_result result = save_file.load_file("savegame.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file savegame.xml. pugi error: %s", result.description());
+		ret = false;
+	}
+	else
+	{
+
+		saveGame = save_file.child("save");
+		app_save = saveGame.child("renderer");
+		App->render->loading(app_save);
+	}
+
+	return ret;
+}
 
 // TODO 7: Create a method to save the current state
 

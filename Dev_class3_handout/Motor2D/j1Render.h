@@ -39,6 +39,9 @@ public:
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
 
+	//virtual overtide loading
+	bool loading( pugi::xml_node& hola) const override;
+
 public:
 
 	SDL_Renderer*	renderer;
