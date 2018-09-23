@@ -60,6 +60,15 @@ public:
 	}
 
 	// TODO 3: Create new virtual methods to Load and Save
+	virtual bool saving( mutable pugi::xml_document&) const
+	{
+		return true;
+	}
+
+	virtual bool loading(const pugi::xml_document&) const 
+	{
+		return true;
+	}
 
 public:
 

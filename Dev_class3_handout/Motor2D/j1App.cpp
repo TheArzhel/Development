@@ -121,11 +121,6 @@ bool j1App::Update()
 	return ret;
 }
 
-void j1App::real_save()
-{}
-
-void j1App::real_load()
-{}
 // ---------------------------------------------
 bool j1App::LoadConfig()
 {
@@ -157,11 +152,14 @@ void j1App::FinishUpdate()
 {
 	// TODO 1: This is a good place to call load / Save functions
 
-	if (must_safe)
+	if (save)
 	{
 
 	}
+	if (load) 
+	{
 
+	}
 }
 
 // Call modules before each loop iteration
@@ -272,6 +270,15 @@ const char* j1App::GetOrganization() const
 	return organization.GetString();
 }
 
+bool j1App::mustsave() {
+	save = true;
+	return save;
+}
+
+bool j1App::mustload() {
+	load = true;
+	return load;
+}
 
 // TODO 4: Create a simulation of the xml file to read 
 

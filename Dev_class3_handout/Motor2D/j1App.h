@@ -48,17 +48,13 @@ public:
 	// that can be called anytime, even if they 
 	// will one execute by the very end of the frame
 	// Load / Save
+	bool save, load = false ;
 
-	void Save() 
-	{
-		bool must_safe = false;
-	}
+	bool mustsave();
+	bool mustload();
 
-	void Load()
-	{
-		bool must_load = false;
-	}
-
+	bool saving();
+	bool loading();
 
 private:
 
