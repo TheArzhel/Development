@@ -314,7 +314,7 @@ bool j1App::SavingFile()
 {
 	bool ret = true;
 
-	bool result = save_file_doc.save_file("savegame.xml");
+	save_file_doc.save("savegame.xml");
 
 	if (result == false)
 	{
