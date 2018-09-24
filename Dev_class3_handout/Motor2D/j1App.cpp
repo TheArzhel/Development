@@ -314,18 +314,18 @@ bool j1App::SavingFile()
 {
 	bool ret = true;
 
-	pugi::xml_parse_result result = save_file_doc.load_file("savegame.xml");
+	bool result = save_file_doc.save_file("savegame.xml");
 
-	if (result == NULL)
+	if (result == false)
 	{
-		LOG("Could not load map xml file savegame.xml. pugi error: %s", result.description());
+	LOG("Could not save datafile savegame.xml. ");
 		ret = false;
 	}
 	else
 	{
 
-		saveGame = save_file_doc.child("save");
-		app_save = saveGame.child("renderer");
+		saveGame = save_file_doc.append_child("save");
+		app_save = saveGame.append_child("renderer");
 		App->render->saving(app_save);
 	}
 
