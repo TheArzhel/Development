@@ -2,12 +2,12 @@
 #define  _VECTOR3_H_
 #include <math.h>
 
-template <class T>
+template <class Type>
 
 class vec 
 {
 private:
-	T x, y, z;
+	Type x, y, z;
 public:
 
 	//constructor
@@ -15,11 +15,11 @@ public:
 
 	vec(const vec& vector) : x(vector.x), y(vector.y), z(vector.z) {}
 
-	vec(T x, T y, T z) : x(x), y(y), z(z) {}
+	vec(Type x, Type y, Type z) : x(x), y(y), z(z) {}
 
-	//desturctor
+	//destructor
 
-	~vec() {}
+	/*virtual*/ ~vec() {}
 
 	//operators
 
@@ -65,29 +65,38 @@ public:
 
 	//methods
 
-	vec normalize() 
+	vec as_normalize() const
 	{
-		T length = sqrt((x*x) + (y*y) + (z*z));
+		Type length = sqrt((x*x) + (y*y) + (z*z));
 		return vec (x / length, y / length, z / length);
 	}
 
-
-	bool is_zero( const vec vector) const 
+	vec normalize() 
 	{
-		return (vector.x == 0 && vector.y == 0 && vector.z == 0);
+		Type length = sqrt((x*x) + (y*y) + (z*z));
+		x = x / length;
+		y = y / length;
+		z = z / length; 
+		return *this;
 	}
 
-	vec zero(vec &vector) 
+	bool is_zero() const 
+	{
+		return (x == 0Type && y == 0 && z == 0);
+	}
+
+	vec zero() 
 	{ 
 		vector.x = vector.y = vector.z = 0; 
 		return *this;
 	}
 
-	void distance_to( const vec &vector) const
+	void distance_to( const vec &vector) const //change 
 	{
-		T a = x - vector.x;
-		T b = y - vector.y;
-		T c = z - vector.z;
+		Type a = x - vector.x;
+		Type b = y - vector.y;
+		Type c = z - vector.z;
+		// eliminar 
 		cout << "the distances from each component of each vector are " << "x: " << a << " y: " << b << " z:  " << c << endl;
 	}
 
