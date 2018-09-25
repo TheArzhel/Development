@@ -102,9 +102,9 @@ bool j1Render::loading( pugi::xml_node& hola) const
 
 bool j1Render::saving(pugi::xml_node& hola) const
 {
-	hola.append_child("camera").first_attribute().set_value(camera.x);
+	hola.child("camera").first_attribute().set_value(camera.x);
 
-	hola.append_child("camera").last_attribute().set_value(camera.y);
+	hola.child("camera").last_attribute().set_value(camera.y);
 
 	/*pugi::xml_attribute attrX = hola.child("camera").first_attribute();
 

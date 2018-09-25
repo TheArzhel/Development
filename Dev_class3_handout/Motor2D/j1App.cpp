@@ -303,7 +303,9 @@ bool j1App::LoadSaveFile()
 		saveGame = save_file_doc.child("save");
 		app_save = saveGame.child("renderer");
 		App->render->loading(app_save);
+
 	}
+	
 
 	return ret;
 }
@@ -314,8 +316,7 @@ bool j1App::SavingFile()
 {
 	bool ret = true;
 
-	save_file_doc.save("savegame.xml");
-
+	pugi::xml_parse_result result = save_file_doc.load_file("savegame.xml"); 
 	if (result == false)
 	{
 	LOG("Could not save datafile savegame.xml. ");
@@ -324,10 +325,11 @@ bool j1App::SavingFile()
 	else
 	{
 
-		saveGame = save_file_doc.append_child("save");
-		app_save = saveGame.append_child("renderer");
+		saveGame = save_file_doc.child("save");
+		app_save = saveGame.child("renderer");
 		App->render->saving(app_save);
 	}
 
+	save_file_doc.save_file("savegame.xml");
 	return ret;
 }
