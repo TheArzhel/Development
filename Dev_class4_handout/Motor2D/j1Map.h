@@ -1,5 +1,7 @@
 #ifndef __j1MAP_H__
 #define __j1MAP_H__
+#define NUM_TILES 1
+
 
 #include "PugiXml/src/pugixml.hpp"
 #include "p2List.h"
@@ -54,9 +56,12 @@ private:
 public:
 
 	// TODO 1: Add your struct for map info as public for now
-	struct InfoMap DesertMap;
-	struct TileSet DesertTile;
+	 InfoMap DesertMap;
+	 TileSet* DesertTile = new TileSet[NUM_TILES];
 
+	void LoadMap();
+	void LoadTile();
+	
 private:
 
 	pugi::xml_document	map_file;

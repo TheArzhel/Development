@@ -44,6 +44,8 @@ bool j1Map::CleanUp()
 	// TODO 2: Make sure you clean up any memory allocated
 	// from tilesets / map
 
+	delete(DesertTile); 
+
 
 
 
@@ -70,62 +72,8 @@ bool j1Map::Load(const char* file_name)
 	{
 		// TODO 3: Create and call a private function to load and fill
 		// all your map data
-
-		DesertMap.width = map_file.child("map").attribute("width").as_uint();
-		LOG("file loaded. Width: %d", DesertMap.width);
-		DesertMap.height = map_file.child("map").attribute("height").as_uint();
-		LOG("file loaded. Height: %d", DesertMap.height);
-		DesertMap.tilewidth = map_file.child("map").attribute("tilewidth").as_uint();
-		LOG("file loaded. Tilewidth: %d", DesertMap.tilewidth);
-		DesertMap.tileheight = map_file.child("map").attribute("tileheight").as_uint();
-		LOG("file loaded. TileHeight: %d", DesertMap.tileheight);
-
-		p2SString orientationValue = map_file.child("map").attribute("orientation").as_string();
-
-
-		if (orientationValue == "orthogonal") {
-			DesertMap.orientation::orthogonal;
-			LOG("file loaded. Orientation: Orthogonal");
-		}
-		else if (orientationValue == "isometric") {
-			DesertMap.orientation::isometric;
-			LOG("file loaded. Orientation: Isometric");
-		}
-		else if (orientationValue == "isometric staggered") {
-			DesertMap.orientation::isometric_staggered;
-			LOG("file loaded. Orientation: isometric staggered");
-		}
-		else if (orientationValue == "hexagonal staggered") {
-			DesertMap.orientation::hexagonal_staggered;
-			LOG("file loaded. Orientation: Hexagonal Staggered");
-		}
-		else {
-			DesertMap.orientation::error;
-			LOG("file loaded. error, couldnt load orientation");
-		}
-
-		p2SString RenderValue = map_file.child("map").attribute("renderorder").as_string();
-
-		if (RenderValue == "right down") {
-			DesertMap.renderOrder::right_down;
-			LOG("file loaded. Render Order: Right Down");
-		}
-		else if (RenderValue == "right up") {
-			DesertMap.renderOrder::right_up;
-			LOG("file loaded. Render Order: Right Up");
-		}
-		else if (RenderValue == "left down") {
-			DesertMap.renderOrder::left_down;
-			LOG("file loaded. Render Order: Left Down");
-		}
-		else if (RenderValue == "left up") {
-			DesertMap.renderOrder::left_up;
-			LOG("file loaded. Render Order: Left Up");
-		}
-		else {
-			DesertMap.renderOrder::error_render;
-			LOG("file loaded. error, couldnt load render order");
-		}
+		LoadMap();
+		
 
 	}
 	// TODO 4: Create and call a private function to load a tileset
@@ -143,8 +91,88 @@ bool j1Map::Load(const char* file_name)
 	return ret;
 }
 
-void LoadMap() 
+void j1Map::LoadMap() 
+{
+	DesertMap.width = map_file.child("map").attribute("width").as_uint();
+	LOG("file loaded. Width: %d", DesertMap.width);
+	DesertMap.height = map_file.child("map").attribute("height").as_uint();
+	LOG("file loaded. Height: %d", DesertMap.height);
+	DesertMap.tilewidth = map_file.child("map").attribute("tilewidth").as_uint();
+	LOG("file loaded. Tilewidth: %d", DesertMap.tilewidth);
+	DesertMap.tileheight = map_file.child("map").attribute("tileheight").as_uint();
+	LOG("file loaded. TileHeight: %d", DesertMap.tileheight);
+
+	p2SString orientationValue = map_file.child("map").attribute("orientation").as_string();
+
+
+	if (orientationValue == "orthogonal") {
+		DesertMap.orientation::orthogonal;
+		LOG("file loaded. Orientation: Orthogonal");
+	}
+	else if (orientationValue == "isometric") {
+		DesertMap.orientation::isometric;
+		LOG("file loaded. Orientation: Isometric");
+	}
+	else if (orientationValue == "isometric staggered") {
+		DesertMap.orientation::isometric_staggered;
+		LOG("file loaded. Orientation: isometric staggered");
+	}
+	else if (orientationValue == "hexagonal staggered") {
+		DesertMap.orientation::hexagonal_staggered;
+		LOG("file loaded. Orientation: Hexagonal Staggered");
+	}
+	else {
+		DesertMap.orientation::error;
+		LOG("file loaded. error, couldnt load orientation");
+	}
+
+	p2SString RenderValue = map_file.child("map").attribute("renderorder").as_string();
+
+	if (RenderValue == "right down") {
+		DesertMap.renderOrder::right_down;
+		LOG("file loaded. Render Order: Right Down");
+	}
+	else if (RenderValue == "right up") {
+		DesertMap.renderOrder::right_up;
+		LOG("file loaded. Render Order: Right Up");
+	}
+	else if (RenderValue == "left down") {
+		DesertMap.renderOrder::left_down;
+		LOG("file loaded. Render Order: Left Down");
+	}
+	else if (RenderValue == "left up") {
+		DesertMap.renderOrder::left_up;
+		LOG("file loaded. Render Order: Left Up");
+	}
+	else {
+		DesertMap.renderOrder::error_render;
+		LOG("file loaded. error, couldnt load render order");
+	}
+
+	
+}
+
+void j1Map::LoadTile()
 {
 
+	for (pugi::xml_node tileset = map_file.child("map").child("tileset"); tileset; tileset = tileset.next_sibling("tileset")) {
+
+		for (unsigned int iterator = 0; iterator < NUM_TILES; ++iterator)
+		{
+			DesertTile[iterator].spacing = map_file.child("tileset").attribute("spacing").as_uint();
+			LOG("file loaded. Spacing: %d", DesertTile[iterator].spacing);
+
+			DesertTile[iterator].margin = map_file.child("tileset").attribute("margin").as_uint();
+			LOG("file loaded. Margin: %d", DesertTile[iterator].margin);
+
+			DesertTile[iterator].tileweigth = map_file.child("tileset").attribute("tilewidth").as_uint();
+			LOG("file loaded. TileWidth: %d", DesertTile[iterator].tileweigth);
+
+			DesertTile[iterator].tileheight = map_file.child("tileset").attribute("tileheight").as_uint();
+			LOG("file loaded. TileHeight: %d", DesertTile[iterator].tileheight);
+		}
+	}
 }
+
+
 
