@@ -12,6 +12,18 @@
 
 
 // TODO 1: Create a struct needed to hold the information to Map node
+struct InfoMap
+{
+	unsigned int width, height, tilewidth, tileheight;
+	enum orientation { error, orthogonal, isometric, isometric_staggered, hexagonal_staggered};
+	enum renderOrder { error_render, right_down, right_up, left_down, left_up };
+};
+
+struct TileSet
+{
+	unsigned int spacing, margin, tileweigth, tileheight;
+	// imagen quizas SDL Texture
+};
 
 
 // ----------------------------------------------------
@@ -42,18 +54,8 @@ private:
 public:
 
 	// TODO 1: Add your struct for map info as public for now
-	struct InfoMap
-	{
-		unsigned int width,height,tileweigth,tileheight;
-		enum orientation { error, orientation, isometric, isometric_escaleted, hexagonal_escaleted };
-		enum renderOrder {error, right_down, right_up,left_down, left_up};
-	};
-
-	struct TileSet 
-	{
-		unsigned int spacing, margin, tileweigth, tileheight;
-		//3 variables nombre weight and height , guardar imagen quizas SDL Texture
-	};
+	struct InfoMap DesertMap;
+	struct TileSet DesertTile;
 
 private:
 
