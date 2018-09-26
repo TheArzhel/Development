@@ -23,8 +23,9 @@ struct InfoMap
 
 struct TileSet
 {
-	unsigned int spacing, margin, tileweigth, tileheight;
-	// imagen quizas SDL Texture
+	unsigned int spacing, margin, tileweigth, tileheight,firstgid;
+	//p2SString TileName;
+	SDL_Rect
 };
 
 

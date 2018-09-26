@@ -171,6 +171,14 @@ void j1Map::LoadTile()
 
 			DesertTile[iterator].tileheight = tileset.attribute("tileheight").as_uint();
 			LOG("Tile loaded. TileHeight: %d", DesertTile[iterator].tileheight);
+
+			DesertTile[iterator].firstgid = tileset.attribute("firstgid").as_uint();
+			LOG("Tile loaded. Firstgid: %d", DesertTile[iterator].firstgid);
+
+			//DesertTile[iterator].TileName = tileset.attribute("name").as_string();
+			//LOG("Tile loaded. Name: %s", DesertTile[iterator].TileName);
+
+			//cargar png asignado a tile
 		}
 	}
 }
