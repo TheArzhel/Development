@@ -73,6 +73,7 @@ bool j1Map::Load(const char* file_name)
 		// TODO 3: Create and call a private function to load and fill
 		// all your map data
 		LoadMap();
+		LoadTile();
 		
 
 	}
@@ -128,25 +129,25 @@ void j1Map::LoadMap()
 
 	p2SString RenderValue = map_file.child("map").attribute("renderorder").as_string();
 
-	if (RenderValue == "right down") {
+	if (RenderValue == "right-down") {
 		DesertMap.renderOrder::right_down;
 		LOG("file loaded. Render Order: Right Down");
 	}
-	else if (RenderValue == "right up") {
+	else if (RenderValue == "right-up") {
 		DesertMap.renderOrder::right_up;
 		LOG("file loaded. Render Order: Right Up");
 	}
-	else if (RenderValue == "left down") {
+	else if (RenderValue == "left-down") {
 		DesertMap.renderOrder::left_down;
 		LOG("file loaded. Render Order: Left Down");
 	}
-	else if (RenderValue == "left up") {
+	else if (RenderValue == "left-up") {
 		DesertMap.renderOrder::left_up;
 		LOG("file loaded. Render Order: Left Up");
 	}
 	else {
 		DesertMap.renderOrder::error_render;
-		LOG("file loaded. error, couldnt load render order");
+		LOG("file loaded. Render Order error, couldnt load render order");
 	}
 
 	
@@ -159,17 +160,17 @@ void j1Map::LoadTile()
 
 		for (unsigned int iterator = 0; iterator < NUM_TILES; ++iterator)
 		{
-			DesertTile[iterator].spacing = map_file.child("tileset").attribute("spacing").as_uint();
-			LOG("file loaded. Spacing: %d", DesertTile[iterator].spacing);
+			DesertTile[iterator].spacing = tileset.attribute("spacing").as_uint();
+			LOG("Tile loaded. Spacing: %d", DesertTile[iterator].spacing);
 
-			DesertTile[iterator].margin = map_file.child("tileset").attribute("margin").as_uint();
-			LOG("file loaded. Margin: %d", DesertTile[iterator].margin);
+			DesertTile[iterator].margin = tileset.attribute("margin").as_uint();
+			LOG("Tile loaded. Margin: %d", DesertTile[iterator].margin);
 
-			DesertTile[iterator].tileweigth = map_file.child("tileset").attribute("tilewidth").as_uint();
-			LOG("file loaded. TileWidth: %d", DesertTile[iterator].tileweigth);
+			DesertTile[iterator].tileweigth = tileset.attribute("tilewidth").as_uint();
+			LOG("Tile loaded. TileWidth: %d", DesertTile[iterator].tileweigth);
 
-			DesertTile[iterator].tileheight = map_file.child("tileset").attribute("tileheight").as_uint();
-			LOG("file loaded. TileHeight: %d", DesertTile[iterator].tileheight);
+			DesertTile[iterator].tileheight = tileset.attribute("tileheight").as_uint();
+			LOG("Tile loaded. TileHeight: %d", DesertTile[iterator].tileheight);
 		}
 	}
 }
