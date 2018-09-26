@@ -33,6 +33,8 @@ void j1Map::Draw()
 
 	// TODO 6: Iterate all tilesets and draw all their 
 	// images in 0,0 (you should have only one tileset for now)
+	
+
 
 }
 
@@ -155,10 +157,12 @@ void j1Map::LoadMap()
 
 void j1Map::LoadTile()
 {
-
+	
 	for (pugi::xml_node tileset = map_file.child("map").child("tileset"); tileset; tileset = tileset.next_sibling("tileset")) {
 
-		for (unsigned int iterator = 0; iterator < NUM_TILES; ++iterator)
+		/*p2SString tmp("%s%s", folder.GetString(), );*/
+		
+		while (iterator <NUM_TILES)
 		{
 			DesertTile[iterator].spacing = tileset.attribute("spacing").as_uint();
 			LOG("Tile loaded. Spacing: %d", DesertTile[iterator].spacing);
@@ -179,8 +183,11 @@ void j1Map::LoadTile()
 			//LOG("Tile loaded. Name: %s", DesertTile[iterator].TileName);
 
 			//cargar png asignado a tile
+			iterator++;
+			break;
 		}
 	}
+	iterator = 0;
 }
 
 

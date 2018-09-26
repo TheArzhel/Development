@@ -25,7 +25,7 @@ struct TileSet
 {
 	unsigned int spacing, margin, tileweigth, tileheight,firstgid;
 	//p2SString TileName;
-	SDL_Rect
+	SDL_Texture* Desertpng;
 };
 
 
@@ -62,6 +62,8 @@ public:
 
 	void LoadMap();
 	void LoadTile();
+	unsigned int iterator = 0;
+	unsigned int TileImagePNG = 0;
 	
 private:
 
