@@ -8,6 +8,7 @@ class vec
 {
 private:
 	Type x, y, z;
+	
 public:
 
 	//constructor
@@ -82,28 +83,25 @@ public:
 
 	bool is_zero() const 
 	{
-		return (x == 0Type && y == 0 && z == 0);
+		return (x == 0 && y == 0 && z == 0);
+		//??
 	}
 
 	vec zero() 
 	{ 
 		vector.x = vector.y = vector.z = 0; 
 		return *this;
+		//??
 	}
 
-	void distance_to( const vec &vector) const //change 
+	vec distance_to( const vec &vector) const //change 
 	{
 		Type a = x - vector.x;
 		Type b = y - vector.y;
 		Type c = z - vector.z;
-		// eliminar 
-		cout << "the distances from each component of each vector are " << "x: " << a << " y: " << b << " z:  " << c << endl;
+		return vec(a, b, c);
 	}
 
-	void print() const 
-	{
-		cout << "x: " << x << " y: " << y << " z: " << z << endl;
-	}
 };
 
 
