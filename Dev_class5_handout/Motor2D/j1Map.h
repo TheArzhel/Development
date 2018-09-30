@@ -10,6 +10,7 @@
 
 struct MapLayer
 {
+	p2SString name;
 	unsigned int width, height;
 	unsigned int*  CoreData = nullptr;
 
