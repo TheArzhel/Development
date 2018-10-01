@@ -11,12 +11,18 @@
 struct MapLayer
 {
 	p2SString name;
-	unsigned int width, height;
+	unsigned int width, height, size;
 	unsigned int*  CoreData = nullptr;
+
 
 	~MapLayer() {
 		if (CoreData != nullptr)
 			delete(CoreData);
+	}
+
+	inline uint Get(uint x, uint y) const
+	{
+		return x + y * width;
 	}
 };
 // ----------------------------------------------------
@@ -101,10 +107,12 @@ private:
 	// TODO 3: Create a method that loads a single laye
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 
+
+
 public:
 
 	MapData data;
-	MapLayer Map_Layer;
+	
 private:
 
 	pugi::xml_document	map_file;
