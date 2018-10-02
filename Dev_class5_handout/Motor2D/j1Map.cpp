@@ -35,30 +35,44 @@ void j1Map::Draw()
 	if (map_loaded == false)
 		return;
 
-	p2List_item<TileSet*>* item; //Sprites_Layer
-	item = data.tilesets.start;
+	//p2List_item<TileSet*>* item; //Sprites_Layer
+	//item = data.tilesets.start.;
 
-	p2List_item<MapLayer*>* layer; //Map
-	layer = data.maplayerlist.start;
+	//p2List_item<MapLayer*>* layer; //Map
+	//layer = data.maplayerlist.start;
 
-	// TODO 5: Prepare the loop to draw all tilesets + Blit
-	for (int y = 0; y < data.height; ++y) {
-		for (int x = 0; x < data.width; ++x) {
+	//// TODO 5: Prepare the loop to draw all tilesets + Blit
+	//for (int y = 0; y < data.height; ++y) {
+	//	for (int x = 0; x < data.width; ++x) {
 
-			uint id = layer->data->Get(x, y);
+	//		uint id = layer->data->Get(x, y);
 
-			id = layer->data->CoreData[id];
+	//		id = layer->data->CoreData[id];
 
-			if (id != 0) {
-				SDL_Rect *rect = &item->data->GetTileRect(id);
-				iPoint pos = MapToWorld(x, y);
-				App->render->Blit(item->data->texture, pos.x, pos.y, rect);
-			}
-		}
-	}
+	//		if (id != 0) {
+	//			SDL_Rect *rect = &item->data->GetTileRect(id);
+	//			iPoint pos = MapToWorld(x, y);
+	//			App->render->Blit(item->data->texture, pos.x, pos.y, rect);
+	//		}
+	//	}
+	//}
 
 
-		// TODO 9: Complete the draw function
+	MapLayer* layer = data.maplayerlist.start->data;
+	TileSet* tilesetPointer = data.tilesets.start->data;
+	uint gid = layer->CoreData[0];
+	SDL_Rect rec2 = tilesetPointer->GetTileRect(gid);
+	SDL_Rect rec = { 164, 100, tilesetPointer->tile_width,tilesetPointer->tile_height };
+
+	App->render->Blit(tilesetPointer->texture, 0, 0, &rec2);	
+
+
+	for (int i=0; y<l)
+
+
+
+
+	// TODO 9: Complete the draw function
 
 }
 
@@ -360,11 +374,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 	memset(layer->CoreData, 0u , layer->width*layer->height);
 
-	/*for (uint i = 0; i < (layer->width*layer->height); ++i) {
 	
-		layer->CoreData[i] = node.attribute("tile").as_uint();
-		node = node.next_sibling("tile");
-	}*/
 	int i = 0;
 	for (node = map_file.child("map").child("layer").child("data").child("tile"); node && ret; node = node.next_sibling("tile"))
 	{
