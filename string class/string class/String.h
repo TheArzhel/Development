@@ -8,6 +8,7 @@ class String
 private:
 	unsigned int char_numb = 0;
 	char* str = nullptr;
+	const char* hola = "hi";
 
 public:
 	// constructor
@@ -33,6 +34,7 @@ public:
 	virtual ~String()
 		{
 		delete[] str;
+		
 		}
 
 	//methods
