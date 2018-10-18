@@ -142,6 +142,7 @@ private:
 public:
 
 	MapData data;
+	bool cont = true;
 
 private:
 

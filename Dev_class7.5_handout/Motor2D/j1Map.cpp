@@ -39,7 +39,8 @@ void j1Map::PropagateBFS()
 {
 	// TODO 1: If frontier queue contains elements
 	// pop the last one and calculate its 4 neighbors
-
+	
+	iPoint arrive(23, 14);
 	iPoint tmp;
 	
 	frontier.Pop(tmp);
@@ -51,30 +52,46 @@ void j1Map::PropagateBFS()
 
 
 	bool ret= visited.find(temp2);
-	
-	
-	if (visited.find(temp2) == -1 && IsWalkable(temp2.x, temp2.y))
+	if (cont)
 	{
-		visited.add(temp2);
-		frontier.Push(temp2);
+		if (tmp != arrive)
+		{
+			if (visited.find(temp2) == -1 && IsWalkable(temp2.x, temp2.y))
+			{
+				visited.add(temp2);
+				frontier.Push(temp2);
+			}
+			if (visited.find(temp3) == -1 && IsWalkable(temp3.x, temp3.y))
+			{
+				visited.add(temp3);
+				frontier.Push(temp3);
+			}
+			if (visited.find(temp4) == -1 && IsWalkable(temp4.x, temp4.y))
+			{
+				visited.add(temp4);
+				frontier.Push(temp4);
+			}
+			if (visited.find(temp5) == -1 && IsWalkable(temp5.x, temp5.y))
+			{
+				visited.add(temp5);
+				frontier.Push(temp5);
+			}
+
+		}
+		else if (tmp == arrive)
+		{
+			cont = false;
+		}
 	}
-	if (visited.find(temp3) == -1 && IsWalkable(temp3.x, temp3.y))
+	else if (cont ==false)
 	{
-		visited.add(temp3);
-		frontier.Push(temp3);
+		TileSet* tileset = GetTilesetFromTileId(26);
+
+		SDL_Rect r = tileset->GetTileRect(25);
+		iPoint pos = MapToWorld(23, 14);
+
+		App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 	}
-	if (visited.find(temp4) == -1 && IsWalkable(temp4.x, temp4.y))
-	{
-		visited.add(temp4);
-		frontier.Push(temp4);
-	}
-	if (visited.find(temp5) == -1 && IsWalkable(temp5.x, temp5.y))
-	{
-		visited.add(temp5);
-		frontier.Push(temp5);
-	}
-	
-	
 	// TODO 2: For each neighbor, if not visited, add it
 	// to the frontier queue and visited list
 
@@ -118,14 +135,14 @@ void j1Map::DrawBFS()
 
 bool j1Map::IsWalkable(int x, int y) const
 {
-//TODO 3: return true only if x and y are within map limits
+	//TODO 3: return true only if x and y are within map limits
 	// and the tile is walkable (tile id 0 in the navigation layer)
 	bool ret = false;
 
-	if (x < data.width && x >= 0 && y < data.height && y <= 0)
+	if (x < data.width && x >= 0 && y < data.height && y >= 0)
 	{
-		if (data.layers.start->next->data->Get(x,y))
-		ret = true;
+		if (data.layers.start->next->data->Get(x,y)==0)
+		ret = true; 
 	}
 		
 	
@@ -165,6 +182,17 @@ void j1Map::Draw()
 	}
 
 	DrawBFS();
+
+	if (cont == false)
+	{
+		TileSet* tileset = GetTilesetFromTileId(26);
+
+		SDL_Rect r = tileset->GetTileRect(25);
+		iPoint pos = MapToWorld(23, 14);
+
+		App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+	}
+
 }
 
 int Properties::Get(const char* value, int default_value) const
