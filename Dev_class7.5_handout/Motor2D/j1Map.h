@@ -7,6 +7,15 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
+struct previousTile
+{
+	iPoint coordinates;
+	previousTile * before;
+
+
+};
+
+
 // ----------------------------------------------------
 struct Properties
 {
@@ -153,6 +162,11 @@ private:
 	/// BFS
 	p2Queue<iPoint>		frontier;
 	p2List<iPoint>		visited;
+
+	p2List<previousTile*> lastnode;
+	p2List<previousTile*> toprint;
+
+	previousTile destine;
 };
 
 #endif // __j1MAP_H__

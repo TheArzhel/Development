@@ -40,62 +40,132 @@ void j1Map::PropagateBFS()
 	// TODO 1: If frontier queue contains elements
 	// pop the last one and calculate its 4 neighbors
 	
-	iPoint arrive(23, 14);
-	iPoint tmp;
-	
-	frontier.Pop(tmp);
-
-	iPoint temp2(tmp.x+1, tmp.y);
-	iPoint temp3(tmp.x -1, tmp.y);
-	iPoint temp4(tmp.x, tmp.y +1);
-	iPoint temp5(tmp.x, tmp.y -1);
-
-
-	bool ret= visited.find(temp2);
-	if (cont)
+	if (frontier.Count() > 0)
 	{
-		if (tmp != arrive)
+		iPoint arrive(5, 4);
+		iPoint tmp;
+
+		frontier.Pop(tmp);
+
+		iPoint temp2(tmp.x + 1, tmp.y);
+		iPoint temp3(tmp.x - 1, tmp.y);
+		iPoint temp4(tmp.x, tmp.y + 1);
+		iPoint temp5(tmp.x, tmp.y - 1);
+
+		previousTile *temporal = new previousTile;
+		previousTile *temporal2 = new previousTile;
+
+		//If first tile
+		if (tmp.x == 19 && tmp.y == 4)
 		{
-			if (visited.find(temp2) == -1 && IsWalkable(temp2.x, temp2.y))
+			temporal->coordinates = tmp;
+			temporal->before = nullptr;
+			lastnode.add(temporal);
+		}
+
+		int itemindex = visited.find(tmp);
+
+		temporal2->coordinates = tmp;
+		temporal2->before= lastnode.At(itemindex)->data;
+
+		bool ret = visited.find(temp2);
+		if (cont)
+		{
+			if (tmp != arrive)
 			{
-				visited.add(temp2);
-				frontier.Push(temp2);
+				if (visited.find(temp2) == -1 && IsWalkable(temp2.x, temp2.y))
+				{
+					visited.add(temp2);
+					frontier.Push(temp2);
+
+					temporal2->coordinates = temp2;
+					lastnode.add(temporal2);
+				}
+				if (visited.find(temp3) == -1 && IsWalkable(temp3.x, temp3.y))
+				{
+					visited.add(temp3);
+					frontier.Push(temp3);
+
+					previousTile *temporal3 = new previousTile;
+					temporal3->before = lastnode.At(itemindex)->data;
+					temporal3->coordinates = temp3;
+
+					lastnode.add(temporal3);
+				}
+				if (visited.find(temp4) == -1 && IsWalkable(temp4.x, temp4.y))
+				{
+					visited.add(temp4);
+					frontier.Push(temp4);
+
+					previousTile *temporal4 = new previousTile;
+					temporal4->before = lastnode.At(itemindex)->data;
+					temporal4->coordinates = temp3;
+
+					lastnode.add(temporal4);
+				}
+				if (visited.find(temp5) == -1 && IsWalkable(temp5.x, temp5.y))
+				{
+					visited.add(temp5);
+					frontier.Push(temp5);
+
+					previousTile *temporal5 = new previousTile;
+					temporal5->before = lastnode.At(itemindex)->data;
+					temporal5->coordinates = temp3;
+
+					lastnode.add(temporal5);
+				}
+
 			}
-			if (visited.find(temp3) == -1 && IsWalkable(temp3.x, temp3.y))
+			else if (tmp == arrive)
 			{
-				visited.add(temp3);
-				frontier.Push(temp3);
+				cont = false;
 			}
-			if (visited.find(temp4) == -1 && IsWalkable(temp4.x, temp4.y))
+		}
+		if (cont == false)
+		{
+			TileSet* tileset = GetTilesetFromTileId(26);
+
+			SDL_Rect r = tileset->GetTileRect(25);
+			iPoint pos = MapToWorld(23, 14);
+
+			App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+
+
+			destine.coordinates = temp2;
+			destine.before = temporal2->before;
+
+			
+
+
+
+		}
+		// TODO 2: For each neighbor, if not visited, add it
+		// to the frontier queue and visited list
+
+		if (visited.find(arrive) != -1 && cont == false)   //found==true
+		{
+
+			int index = 0;
+			index = visited.find(temp2);
+
+			p2List_item <previousTile*> *auxitem;
+
+			iPoint start = { 19,4 };
+
+			TileSet* tileset = GetTilesetFromTileId(25);
+
+			SDL_Rect r = tileset->GetTileRect(25);
+
+			for (auxitem = lastnode.At(index); auxitem->data->coordinates != start && auxitem->data->before != NULL; *auxitem = auxitem->data->before)
 			{
-				visited.add(temp4);
-				frontier.Push(temp4);
-			}
-			if (visited.find(temp5) == -1 && IsWalkable(temp5.x, temp5.y))
-			{
-				visited.add(temp5);
-				frontier.Push(temp5);
+				previousTile *to_print = new previousTile;
+				to_print->coordinates = auxitem->data->coordinates;
+				toprint.add(to_print);
 			}
 
 		}
-		else if (tmp == arrive)
-		{
-			cont = false;
-		}
+
 	}
-	else if (cont ==false)
-	{
-		TileSet* tileset = GetTilesetFromTileId(26);
-
-		SDL_Rect r = tileset->GetTileRect(25);
-		iPoint pos = MapToWorld(23, 14);
-
-		App->render->Blit(tileset->texture, pos.x, pos.y, &r);
-	}
-	// TODO 2: For each neighbor, if not visited, add it
-	// to the frontier queue and visited list
-
-
 
 }
 
@@ -187,10 +257,23 @@ void j1Map::Draw()
 	{
 		TileSet* tileset = GetTilesetFromTileId(26);
 
-		SDL_Rect r = tileset->GetTileRect(25);
+		SDL_Rect r2 = tileset->GetTileRect(25);
 		iPoint pos = MapToWorld(23, 14);
 
-		App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+		App->render->Blit(tileset->texture, pos.x, pos.y, &r2);
+
+		p2List_item <previousTile*> *auxitem;
+
+		SDL_Rect r = tileset->GetTileRect(25);
+
+		for (auxitem = toprint.start; auxitem; auxitem = auxitem->next)
+		{
+
+			iPoint pos = MapToWorld(auxitem->data->coordinates.x, auxitem->data->coordinates.y);
+			App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+
+		}
+
 	}
 
 }
